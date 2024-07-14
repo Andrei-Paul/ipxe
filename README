@@ -1,3 +1,13 @@
+Personal README File
+
+Quick start guide:
+
+# edit custom/my.script
+docker compose up -d
+# output is src/bin-x86_64-efi/ipxe.efi
+
+-
+
 iPXE README File
 
 Quick start guide:
