@@ -19,7 +19,7 @@ EMBED=`printenv EMBED`
 if [ -z "${EMBED}" ]
 then
 	TASK="${TASK} STANDARD"
-elselung
+else
 	TASK="${TASK} WITH SCRIPT [ ${EMBED} ]"
     BUILD="${BUILD} EMBED=${EMBED}"
 fi
