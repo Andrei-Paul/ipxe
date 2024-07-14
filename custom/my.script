@@ -1,0 +1,15 @@
+#!ipxe
+
+echo CUSTOM IPXE CHAINING TO EXAMPLE.ORG CUSTOM IPXE ...
+dhcp
+echo
+show ip
+show dns
+show gateway
+show next-server
+show netmask
+show domain
+echo
+route
+echo
+chain https://example.org:443/custom.ipxe

@@ -1,0 +1,31 @@
+#!/bin/ash
+
+# install ipxe make dependencies
+apk --no-cache add make gcc musl-dev xz-dev perl git
+
+TASK=""
+BUILD="make"
+
+MAKE=`printenv MAKE`
+if [ -z "${MAKE}" ]
+then
+	TASK="MAKE ALL"
+else
+    TASK="MAKE [ ${MAKE} ]"
+    BUILD="${BUILD} ${MAKE}"
+fi
+
+EMBED=`printenv EMBED`
+if [ -z "${EMBED}" ]
+then
+	TASK="${TASK} STANDARD"
+elselung
+	TASK="${TASK} WITH SCRIPT [ ${EMBED} ]"
+    BUILD="${BUILD} EMBED=${EMBED}"
+fi
+
+echo "${TASK}"
+
+cd /home/ipxe/src
+set -- ${BUILD}
+"${@}"

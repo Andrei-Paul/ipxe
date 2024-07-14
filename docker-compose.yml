@@ -1,0 +1,12 @@
+services:
+  openldap-builder:
+    hostname: ipxe-builder
+    image: alpine:latest
+    container_name: ipxe-builder
+    environment:
+      - MAKE=bin-x86_64-efi/ipxe.efi
+      - EMBED=/home/ipxe/custom/my.script
+    volumes:
+       - .:/home/ipxe
+    restart: no
+    entrypoint: /home/ipxe/entrypoint
