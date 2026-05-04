@@ -1,15 +1,40 @@
 #!ipxe
 
-echo CUSTOM IPXE CHAINING TO EXAMPLE.ORG CUSTOM IPXE ...
-dhcp
+echo === CUSTOM IPXE CHAINING TO EXAMPLE.ORG CUSTOM IPXE ===
+echo
+
+:dhcp_retry
+dhcp || goto dhcp_failed
+
+echo === Network ===
+show ip
+show netmask
+show gateway
+show dns
+show domain
+show next-server
+echo
+
+set dns ${net0/dns}
+echo DNS set to ${dns}
+echo
+
+echo Proxmox Answers (Option 250): ${net0/dhcp/option250:string}
+echo
+
+echo === Chaining to CUSTOM IPXE ===
+chain https://example.org:443/custom.ipxe || goto chain_failed
+exit
+
+:dhcp_failed
+echo DHCP failed - dropping to shell
+echo (type 'dhcp' to retry, then 'chain https://example.org:443/custom.ipxe')
+shell
+
+:chain_failed
+echo Chain to CUSTOM IPXE failed
+echo DNS: ${dns}
+echo Verify: example.org resolves and :443 is reachable
 echo
 show ip
-show dns
-show gateway
-show next-server
-show netmask
-show domain
-echo
-route
-echo
-chain https://example.org:443/custom.ipxe
+shell
